@@ -27,14 +27,14 @@ class StringCalculator
 
   def self.extract_custom_delimiter(delimiter_part)
     if delimiter_part.start_with?('[') && delimiter_part.end_with?(']')
-      delimiter_part.scan(/\[(.*?)\]/).join('|')
+      delimiter_part.scan(/\[(.*?)\]/).map { |delim| Regexp.quote(delim[0]) }.join('|')
     else
-      delimiter_part
+      Regexp.quote(delimiter_part)
     end
   end
 
   def self.split_numbers(string_numbers, delimiter)
-    string_numbers.split(/#{Regexp.quote(delimiter)}|\n/)
+    string_numbers.split(/#{delimiter}|\n/)
   end
 
   def self.raise_for_negatives(integers)
